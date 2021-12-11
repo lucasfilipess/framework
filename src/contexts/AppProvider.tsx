@@ -1,8 +1,12 @@
 import React from 'react'
-import UserProvider from './User'
+import { UserProvider, ToastProvider, InterceptorProvider } from 'contexts'
 
 const AppProvider: React.FC = ({ children }) => (
-  <UserProvider>{children}</UserProvider>
+  <InterceptorProvider>
+    <ToastProvider>
+      <UserProvider>{children}</UserProvider>
+    </ToastProvider>
+  </InterceptorProvider>
 )
 
 export default AppProvider

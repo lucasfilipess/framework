@@ -12,8 +12,6 @@ import { sidebarNavigation, userNavigation } from 'config'
 export const Routes: React.FC = () => {
   const { user } = useUser()
 
-  console.log(user)
-
   return (
     <Router>
       <Layout
