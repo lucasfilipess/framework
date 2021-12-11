@@ -1,6 +1,14 @@
 import loadable from '@loadable/component'
-import { Spinner } from 'components'
+import { Loader } from 'components'
 
-export const Home = loadable(() => import('./Home'), {
-  fallback: <Spinner />
+export const Posts = loadable(() => import('./Posts'), {
+  fallback: <Loader />
+})
+
+export const Albums = loadable(() => import('./Albums'), {
+  fallback: <Loader />
+})
+
+export const ToDo = loadable(() => import('./ToDo'), {
+  fallback: <Loader />
 })

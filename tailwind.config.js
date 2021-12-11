@@ -1,14 +1,18 @@
+const colors = require('tailwindcss/colors')
+
 module.exports = {
-  // Uncomment the line below to enable the experimental Just-in-Time ("JIT") mode.
-  // https://tailwindcss.com/docs/just-in-time-mode
-  // mode: "jit",
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        cyan: colors.cyan,
+      },
+    },
   },
   variants: {},
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+  ],
   purge: {
-    // Filenames to scan for classes
     content: [
       "./src/**/*.html",
       "./src/**/*.js",
@@ -17,10 +21,7 @@ module.exports = {
       "./src/**/*.tsx",
       "./public/index.html",
     ],
-    // Options passed to PurgeCSS
     options: {
-      // Whitelist specific selectors by name
-      // safelist: [],
     },
   },
 };

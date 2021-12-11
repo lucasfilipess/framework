@@ -4,12 +4,29 @@ import {
   Route,
   Routes as Switch
 } from 'react-router-dom'
-import { Home } from 'pages'
+import { Posts, Albums, ToDo } from 'pages'
+import { Layout } from 'components'
+import { useUser } from 'hooks'
+import { sidebarNavigation, userNavigation } from 'config'
 
-export const Routes: React.FC = () => (
-  <Router>
-    <Switch>
-      <Route path="/" element={<Home />} />
-    </Switch>
-  </Router>
-)
+export const Routes: React.FC = () => {
+  const { user } = useUser()
+
+  console.log(user)
+
+  return (
+    <Router>
+      <Layout
+        user={user}
+        sidebarNavigation={sidebarNavigation}
+        userNavigation={userNavigation}
+      >
+        <Switch>
+          <Route path="/" element={<Posts />} />
+          <Route path="/albuns" element={<Albums />} />
+          <Route path="/to-do" element={<ToDo />} />
+        </Switch>
+      </Layout>
+    </Router>
+  )
+}
