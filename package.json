@@ -28,6 +28,7 @@
     "react-scripts": "4.0.3",
     "react-spinners": "^0.11.0",
     "react-toastify": "^8.1.0",
+    "react-tooltip": "^4.2.21",
     "tailwindcss": "2.x",
     "typescript": "4.x"
   },

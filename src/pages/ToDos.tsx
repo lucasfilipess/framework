@@ -4,59 +4,34 @@ import {
   ViewGridIcon as ViewGridIconSolid,
   ViewListIcon
 } from '@heroicons/react/solid'
-import { getAlbums, getPhotos, PhotosProps } from 'services'
-import { Select, OptionsProps, Loader, PhotoCard } from 'components'
+import { getToDos, ToDosProps } from 'services'
+import { Loader, ToDoCard } from 'components'
 import { classNames } from 'utils'
 
-const Albums: React.FC = () => {
-  const [photos, setPhotos] = useState<PhotosProps[]>([])
+const ToDos: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [view, setView] = useState<'grid' | 'list'>('grid')
-  const [albums, setAlbums] = useState<OptionsProps[]>([
-    { label: 'Selecione um álbum', value: '' }
-  ])
+  const [toDos, setToDos] = useState<ToDosProps[]>([])
 
   useEffect(() => {
     const asyncUseEffect = async () => {
-      const items = await getAlbums()
-      setAlbums((prev) => [
-        ...prev,
-        ...items.map(({ userId, title }) => ({ value: userId, label: title }))
-      ])
+      setIsLoading(true)
+      setToDos(await getToDos())
+      setTimeout(() => {
+        setIsLoading(false)
+      }, 1000)
     }
     asyncUseEffect()
   }, [])
-
-  const handleGetPhotos = async (userId: number) =>
-    setPhotos(await getPhotos(userId))
-
-  const handleChangeAlbum = ({
-    target
-  }: React.ChangeEvent<HTMLSelectElement>) => {
-    setIsLoading(true)
-    handleGetPhotos(Number(target.value))
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 1000)
-  }
 
   const tabs = [{ name: 'Vistos Recentemente', to: '/', current: true }]
 
   return (
     <div className="w-full pt-8 px-4 sm:px-6 lg:px-8">
       <div className="flex">
-        <div className="w-full">
-          <h1 className="flex-1 text-2xl font-bold text-gray-900 dark:text-gray-300">
-            Álbuns
-          </h1>
-          <div className="w-full max-w-md">
-            <Select
-              className="w-full"
-              options={albums}
-              onChange={handleChangeAlbum}
-            />
-          </div>
-        </div>
+        <h1 className="flex-1 text-2xl font-bold text-gray-900 dark:text-gray-300">
+          To Do
+        </h1>
         <div className="ml-6 bg-gray-100 p-0.5 rounded-lg flex items-end sm:hidden dark:bg-transparent">
           <button
             type="button"
@@ -149,24 +124,18 @@ const Albums: React.FC = () => {
             <h2 id="gallery-heading" className="sr-only">
               Visto recentemente
             </h2>
-            {photos.length === 0 ? (
-              <div className="flex items-center justify-center h-96 w-full text-gray-900 dark:text-gray-400">
-                Nenhum álbum foi selecionado
-              </div>
-            ) : (
-              <ul
-                role="list"
-                className={classNames(
-                  view === 'list'
-                    ? 'flex flex-col items-center w-full gap-y-8'
-                    : 'grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8'
-                )}
-              >
-                {photos.map(({ id, url, title }) => (
-                  <PhotoCard key={`photo-${id}`} url={url} title={title} />
-                ))}
-              </ul>
-            )}
+            <ul
+              role="list"
+              className={classNames(
+                view === 'list'
+                  ? 'flex flex-col items-center w-full gap-y-8'
+                  : 'grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8'
+              )}
+            >
+              {toDos.map((toDoList) => (
+                <ToDoCard key={`to-do-${toDoList.id}`} toDoList={toDoList} />
+              ))}
+            </ul>
           </section>
         )}
       </div>
@@ -174,4 +143,4 @@ const Albums: React.FC = () => {
   )
 }
 
-export default Albums
+export default ToDos

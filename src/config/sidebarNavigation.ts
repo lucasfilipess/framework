@@ -7,7 +7,7 @@ import {
 const sidebarNavigation = [
   { name: 'Postagens', to: '/', icon: HomeIcon },
   { name: 'Álbuns', to: '/albuns', icon: PhotographIcon },
-  { name: 'To-Do', to: '/to-do', icon: ClipboardListIcon }
+  { name: 'To Do', to: '/to-dos', icon: ClipboardListIcon }
 ]
 
 export default sidebarNavigation

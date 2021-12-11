@@ -9,6 +9,10 @@ export const Albums = loadable(() => import('./Albums'), {
   fallback: <Loader />
 })
 
-export const ToDo = loadable(() => import('./ToDo'), {
+export const ToDos = loadable(() => import('./ToDos'), {
+  fallback: <Loader />
+})
+
+export const NotFound = loadable(() => import('./NotFound'), {
   fallback: <Loader />
 })

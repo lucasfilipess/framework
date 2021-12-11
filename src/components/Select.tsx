@@ -42,7 +42,7 @@ const Select: React.FC<Props> = ({
         onChange={onChange}
         value={value}
         name={name}
-        className={`mt-1 h-10 block w-full pl-3 pr-10 py-2 text-base bg-white border-2 border-gray-300 focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm rounded-md ${className}`}
+        className={`mt-1 h-10 block w-full pl-3 pr-10 py-2 text-base bg-white border-2 border-gray-300 focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm rounded-md dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 ${className}`}
       >
         {options.map(({ label, value }, index) => (
           <option key={`option-${index}`} value={value}>

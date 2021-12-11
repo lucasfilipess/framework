@@ -4,7 +4,7 @@ import {
   Route,
   Routes as Switch
 } from 'react-router-dom'
-import { Posts, Albums, ToDo } from 'pages'
+import { Posts, Albums, ToDos, NotFound } from 'pages'
 import { Layout } from 'components'
 import { useUser } from 'hooks'
 import { sidebarNavigation, userNavigation } from 'config'
@@ -22,7 +22,8 @@ export const Routes: React.FC = () => {
         <Switch>
           <Route path="/" element={<Posts />} />
           <Route path="/albuns" element={<Albums />} />
-          <Route path="/to-do" element={<ToDo />} />
+          <Route path="/to-dos" element={<ToDos />} />
+          <Route path="*" element={<NotFound />} />
         </Switch>
       </Layout>
     </Router>
