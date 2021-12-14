@@ -1,4 +1,5 @@
 import React, { useState, createContext, useEffect } from 'react'
+import { APP } from 'config'
 
 export type ThemeProps = 'dark' | 'light'
 
@@ -7,8 +8,7 @@ export type ThemeContextData = {
   toggleTheme: () => void
 }
 
-const storage =
-  (localStorage.getItem('framework:theme') as ThemeProps) || 'light'
+const storage = (localStorage.getItem(`${APP}:theme`) as ThemeProps) || 'light'
 
 export const ThemeContext = createContext<ThemeContextData>(
   {} as ThemeContextData
@@ -26,11 +26,11 @@ const ThemeProvider: React.FC = ({ children }) => {
   const toggleTheme = () => {
     if (theme === 'light') {
       setTheme('dark')
-      localStorage.setItem('framework:theme', 'dark')
+      localStorage.setItem(`${APP}:theme`, 'dark')
       html.classList.add('dark')
     } else {
       setTheme('light')
-      localStorage.setItem('framework:theme', 'light')
+      localStorage.setItem(`${APP}:theme`, 'light')
       html.classList.remove('dark')
     }
   }

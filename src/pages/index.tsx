@@ -16,3 +16,11 @@ export const ToDos = loadable(() => import('./ToDos'), {
 export const NotFound = loadable(() => import('./NotFound'), {
   fallback: <Loader />
 })
+
+export const SignIn = loadable(() => import('./SignIn'), {
+  fallback: <Loader />
+})
+
+export const SignUp = loadable(() => import('./SignUp'), {
+  fallback: <Loader />
+})

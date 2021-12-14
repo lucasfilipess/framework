@@ -1,31 +1,35 @@
 import React from 'react'
 import {
   BrowserRouter as Router,
-  Route,
-  Routes as Switch
+  Routes as Switch,
+  Route
 } from 'react-router-dom'
-import { Posts, Albums, ToDos, NotFound } from 'pages'
-import { Layout } from 'components'
-import { useUser } from 'hooks'
-import { sidebarNavigation, userNavigation } from 'config'
+import RouteElement from './RouteElement'
+import { Posts, Albums, ToDos, NotFound, SignIn, SignUp } from 'pages'
 
 export const Routes: React.FC = () => {
-  const { user } = useUser()
-
   return (
     <Router>
-      <Layout
-        user={user}
-        sidebarNavigation={sidebarNavigation}
-        userNavigation={userNavigation}
-      >
-        <Switch>
-          <Route path="/" element={<Posts />} />
-          <Route path="/albuns" element={<Albums />} />
-          <Route path="/to-dos" element={<ToDos />} />
-          <Route path="*" element={<NotFound />} />
-        </Switch>
-      </Layout>
+      <Switch>
+        <Route path="/" element={<RouteElement component={SignIn} />} />
+        <Route
+          path="/cadastrar"
+          element={<RouteElement component={SignUp} />}
+        />
+        <Route
+          path="/postagens"
+          element={<RouteElement isPrivate component={Posts} />}
+        />
+        <Route
+          path="/albuns"
+          element={<RouteElement isPrivate component={Albums} />}
+        />
+        <Route
+          path="/to-dos"
+          element={<RouteElement isPrivate component={ToDos} />}
+        />
+        <Route path="*" element={<NotFound />} />
+      </Switch>
     </Router>
   )
 }

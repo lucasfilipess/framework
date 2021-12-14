@@ -61,7 +61,6 @@ const ToDos: React.FC = () => {
           </button>
         </div>
       </div>
-      {/* Tabs */}
       <div className="mt-3 sm:mt-2">
         <div className="hidden sm:block">
           <div className="flex items-center border-b border-gray-200">

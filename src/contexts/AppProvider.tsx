@@ -1,16 +1,19 @@
 import React from 'react'
 import {
-  UserProvider,
+  AuthProvider,
   ToastProvider,
   InterceptorProvider,
-  ThemeProvider
+  ThemeProvider,
+  ModalProvider
 } from 'contexts'
 
 const AppProvider: React.FC = ({ children }) => (
   <InterceptorProvider>
     <ThemeProvider>
       <ToastProvider>
-        <UserProvider>{children}</UserProvider>
+        <AuthProvider>
+          <ModalProvider>{children}</ModalProvider>
+        </AuthProvider>
       </ToastProvider>
     </ThemeProvider>
   </InterceptorProvider>

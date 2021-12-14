@@ -7,12 +7,12 @@ export { default as ToDoCard } from './ToDoCard'
 export { default as Tooltip } from './Tooltip'
 export { default as Breadcrumbs } from './Breadcrumbs'
 export { default as Toggle } from './Toggle'
+export { default as Input } from './Input'
+export { default as Checkbox } from './Checkbox'
+export { default as Button } from './Button'
+export { default as Modal } from './Modal'
 
-export type {
-  Props as LayoutProps,
-  SidebarNavigationProps,
-  UserNavigationProps
-} from './Layout'
+export type { Props as LayoutProps, SidebarNavigationProps } from './Layout'
 export type { Props as SelectProps, OptionsProps } from './Select'
 export type { Props as PostCardProps } from './PostCard'
 export type { Props as PhotoCardProps } from './PhotoCard'
@@ -20,3 +20,7 @@ export type { Props as ToDoCardProps } from './ToDoCard'
 export type { Props as TooltipProps } from './Tooltip'
 export type { Props as BreadcrumbsProps } from './Breadcrumbs'
 export type { Props as ToggleProps } from './Toggle'
+export type { Props as InputProps } from './Input'
+export type { Props as CheckboxProps } from './Checkbox'
+export type { Props as ButtonProps } from './Button'
+export type { Props as ModalProps } from './Modal'

@@ -10,8 +10,9 @@ import {
 } from '@heroicons/react/outline'
 import { Tooltip, Breadcrumbs, Toggle } from 'components'
 import { UserProps } from 'contexts'
-import { useTheme } from 'hooks'
+import { useTheme, useAuth } from 'hooks'
 import { classNames } from 'utils'
+import { userImage } from 'assets/images'
 
 export type SidebarNavigationProps = {
   name: string
@@ -19,24 +20,14 @@ export type SidebarNavigationProps = {
   icon(props: React.ComponentProps<'svg'>): JSX.Element
 }
 
-export type UserNavigationProps = {
-  name: string
-  to: string
-}
-
 export type Props = {
   children: ReactNode
   user: UserProps
   sidebarNavigation: SidebarNavigationProps[]
-  userNavigation: UserNavigationProps[]
 }
 
-const Layout: React.FC<Props> = ({
-  children,
-  user,
-  sidebarNavigation,
-  userNavigation
-}) => {
+const Layout: React.FC<Props> = ({ children, user, sidebarNavigation }) => {
+  const { signOut } = useAuth()
   const { theme, toggleTheme } = useTheme()
   const isDark = theme === 'dark'
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -47,9 +38,7 @@ const Layout: React.FC<Props> = ({
 
   return (
     <div className="h-full flex flex-col w-full">
-      {/* Top nav*/}
       <header className="flex-shrink-0 relative h-16 bg-white flex items-center dark:bg-gray-800">
-        {/* Logo area */}
         <div className="absolute inset-y-0 left-0 md:static md:flex-shrink-0">
           <Link
             to="/"
@@ -62,9 +51,7 @@ const Layout: React.FC<Props> = ({
             />
           </Link>
         </div>
-        {/* Menu button area */}
         <div className="absolute inset-y-0 right-0 pr-4 flex items-center sm:pr-6 md:hidden">
-          {/* Mobile menu button */}
           <div className="mr-8">
             <Toggle
               label={
@@ -87,7 +74,6 @@ const Layout: React.FC<Props> = ({
             <MenuIcon className="block h-6 w-6" aria-hidden="true" />
           </button>
         </div>
-        {/* Desktop nav area */}
         <div className="hidden md:min-w-0 md:flex-1 md:flex md:items-center md:justify-between">
           <div className="min-w-0 flex-1">
             <h1 className="text-xl mx-8">
@@ -95,7 +81,6 @@ const Layout: React.FC<Props> = ({
             </h1>
           </div>
           <div className="ml-10 pr-4 flex-shrink-0 flex items-center space-x-10">
-            {/* nav */}
             <Toggle
               label={
                 isDark ? (
@@ -122,7 +107,7 @@ const Layout: React.FC<Props> = ({
                   <span className="sr-only">Open user menu</span>
                   <img
                     className="h-8 w-8 rounded-full"
-                    src={user.imageUrl}
+                    src={user.imageUrl || userImage}
                     alt=""
                   />
                 </Menu.Button>
@@ -152,15 +137,15 @@ const Layout: React.FC<Props> = ({
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <Link
-                            to="/"
+                          <button
+                            onClick={signOut}
                             className={classNames(
                               active ? 'bg-gray-100' : 'dark:text-gray-400',
-                              'block px-4 py-2 text-sm text-gray-700'
+                              'block px-4 py-2 text-sm text-gray-700 w-full text-left'
                             )}
                           >
-                            Sair2
-                          </Link>
+                            Sair
+                          </button>
                         )}
                       </Menu.Item>
                     </div>
@@ -170,7 +155,6 @@ const Layout: React.FC<Props> = ({
             </div>
           </div>
         </div>
-        {/* Mobile menu, show/hide this `div` based on menu open/closed state */}
         <Transition.Root show={mobileMenuOpen} as={Fragment}>
           <Dialog
             as="div"
@@ -236,7 +220,7 @@ const Layout: React.FC<Props> = ({
                     <div className="flex-shrink-0">
                       <img
                         className="h-10 w-10 rounded-full"
-                        src={user.imageUrl}
+                        src={user.imageUrl || userImage}
                         alt=""
                       />
                     </div>
@@ -257,15 +241,18 @@ const Layout: React.FC<Props> = ({
                     </Link>
                   </div>
                   <div className="mt-3 max-w-8xl mx-auto px-2 space-y-1 sm:px-4">
-                    {userNavigation.map(({ name, to }) => (
-                      <Link
-                        key={name}
-                        to={to}
-                        className="block rounded-md py-2 px-3 text-base font-medium text-gray-900 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
-                      >
-                        {name}
-                      </Link>
-                    ))}
+                    <Link
+                      to="/"
+                      className="block rounded-md py-2 px-3 text-base font-medium text-gray-900 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
+                    >
+                      Seu Perfil
+                    </Link>
+                    <button
+                      onClick={signOut}
+                      className="block rounded-md py-2 px-3 text-base font-medium text-gray-900 w-full text-left hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
+                    >
+                      Sair
+                    </button>
                   </div>
                 </div>
               </nav>
@@ -273,9 +260,7 @@ const Layout: React.FC<Props> = ({
           </Dialog>
         </Transition.Root>
       </header>
-      {/* Bottom section */}
       <div className="min-h-0 flex-1 flex overflow-hidden">
-        {/* Narrow sidebar*/}
         <nav
           aria-label="Sidebar"
           className="hidden md:block md:flex-shrink-0 md:bg-gray-800 md:overflow-y-auto"
@@ -308,8 +293,7 @@ const Layout: React.FC<Props> = ({
             ))}
           </div>
         </nav>
-        {/* Main area */}
-        <main className="min-w-0 flex-1 border-t overflow-auto border-gray-200 lg:flex">
+        <main className="min-w-0 flex-1 border-t overflow-auto border-gray-200 lg:flex dark:border-gray-700">
           {children}
         </main>
       </div>

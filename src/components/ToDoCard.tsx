@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useModal } from 'hooks'
 import { classNames } from 'utils'
 
 export type ListProps = {
@@ -12,10 +13,39 @@ export type Props = {
 }
 
 const ToDoCard: React.FC<Props> = ({ toDoList }) => {
+  const { createModal, openModal } = useModal()
   const [list, setList] = useState<ListProps>(toDoList)
 
   const handleChangeStatus = () => {
     setList((prev) => ({ ...prev, completed: !list.completed }))
+  }
+
+  const handleOpenToDoCard = () => {
+    createModal(
+      <div className="w-full flex items-center justify-between p-6 space-x-6">
+        <div className="flex-1">
+          <div className="flex items-center space-x-3">
+            <h3
+              onClick={handleOpenToDoCard}
+              className="text-gray-900 text-sm font-medium dark:text-gray-400 cursor-pointer"
+            >
+              {list.title}
+            </h3>
+            <span
+              className={classNames(
+                list.completed
+                  ? 'text-green-800 bg-green-100'
+                  : 'text-red-800 bg-red-100',
+                'flex-shrink-0 inline-block px-2 py-0.5 text-xs font-medium rounded-full'
+              )}
+            >
+              {list.completed ? 'Concluído' : 'Pendente'}
+            </span>
+          </div>
+        </div>
+      </div>
+    )
+    openModal()
   }
 
   return (
@@ -23,7 +53,10 @@ const ToDoCard: React.FC<Props> = ({ toDoList }) => {
       <div className="w-full flex items-center justify-between p-6 space-x-6">
         <div className="flex-1 truncate">
           <div className="flex items-center space-x-3">
-            <h3 className="text-gray-900 text-sm font-medium truncate dark:text-gray-400">
+            <h3
+              onClick={handleOpenToDoCard}
+              className="text-gray-900 text-sm font-medium truncate dark:text-gray-400 cursor-pointer"
+            >
               {list.title}
             </h3>
             <span
